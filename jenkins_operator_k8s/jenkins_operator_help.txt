@@ -1,0 +1,5 @@
+https://www.jenkins.io/projects/jenkins-operator/#project-vision
+https://github.com/jenkinsci/kubernetes-operator
+https://github.com/jenkinsci/kubernetes-plugin
+https://jenkinsci.github.io/kubernetes-operator/docs/getting-started/latest/installing-the-operator/
+https://jenkinsci.github.io/kubernetes-operator/docs/how-it-works/architecture-and-design/

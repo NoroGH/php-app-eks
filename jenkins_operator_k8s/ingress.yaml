@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  creationTimestamp: null
+  name: front
+  annotations:
+      kubernetes.io/ingress.class: nginx 
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: jenkins-operator-http-example
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer: {}
