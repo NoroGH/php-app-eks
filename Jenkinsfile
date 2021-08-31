@@ -5,6 +5,11 @@ pipeline {
             yaml '''
                 apiVersion: v1
                 kind: Pod
+                metadata:
+                  labels:
+                    jenkins/kube-default: "true"
+                    app: jenkins
+                    component: agent                
                 spec:
                     containers:
                     - name: jnlp
@@ -79,6 +84,7 @@ pipeline {
                 }
             }
         }
+
         stage("Push nginx image") {
             when {
                 expression {
@@ -93,6 +99,7 @@ pipeline {
                 }
             }
         }
+
         stage ('Starting CD') {
             when {
                 expression {
