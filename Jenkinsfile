@@ -10,7 +10,7 @@ pipeline {
                 spec:
                     containers:
                     - name: jnlp
-                        image: jenkinsci/jnlp-slave
+                        image: jnlp-slave
                         command:
                         - /bin/sh
                         - -c
