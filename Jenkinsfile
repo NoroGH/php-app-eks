@@ -42,7 +42,7 @@ pipeline {
             }
             steps {
                 script {
-                    myapp-nginx = docker.build("NoroGH/php-app-eks:${env.GIT_COMMIT}", "--target stage-nginx -f ./Dockerfile .")
+                    nginx = docker.build("NoroGH/php-app-eks:${env.GIT_COMMIT}", "--target stage-nginx -f ./Dockerfile .")
                 }
             }
         }
@@ -55,7 +55,7 @@ pipeline {
             }
             steps {
                 script {
-                    myapp-php = docker.build("NoroGH/php-app-eks:${env.GIT_COMMIT}", "--target stage-php -f ./Dockerfile .")
+                    php = docker.build("NoroGH/php-app-eks:${env.GIT_COMMIT}", "--target stage-php -f ./Dockerfile .")
                 }
             }
         }
@@ -69,7 +69,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('public.ecr.aws/y6q8o0k2', 'php_image') {
-                        myapp-php.push("${env.GIT_COMMIT}")
+                        php.push("${env.GIT_COMMIT}")
                     }
                 }
             }
@@ -83,7 +83,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('public.ecr.aws/y6q8o0k2', 'nginx_image') {
-                        myapp-nginx.push("${env.GIT_COMMIT}")
+                        nginx.push("${env.GIT_COMMIT}")
                     }
                 }
             }
