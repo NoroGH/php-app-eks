@@ -5,8 +5,6 @@ pipeline {
             yaml '''
                 apiVersion: v1
                 kind: Pod
-                metadata:
-                    namespace: ci-cd
                 spec:
                     containers:
                     - name: jnlp
