@@ -10,15 +10,16 @@ pipeline {
                 spec:
                     containers:
                     - name: jnlp
-                        image: jnlp-slave
-                        command:
-                        - /bin/sh
-                        - -c
-                        - export DOCKER_HOST="tcp://localhost:2375"
+                      image: jenkinsci/jnlp-slave
+                      imagePullPolicy: Always
+                      command:
+                      - /bin/sh
+                      - -c
+                      - export DOCKER_HOST="tcp://localhost:2375"
                     - name: dind
-                        image: docker:17-dind
-                        securityContext:
-                            privileged: true 
+                      image: docker:17-dind
+                      securityContext:
+                        privileged: true 
             '''
         }
     }
