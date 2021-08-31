@@ -22,7 +22,7 @@ pipeline {
                       - tail -f /dev/null
                       securityContext:
                         privileged: true 
-            '''
+            '''.stripIndent() 
         }
     }
 
