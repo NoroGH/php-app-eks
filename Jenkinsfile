@@ -13,7 +13,7 @@ pipeline {
                       command:
                       - /bin/sh
                       - -c
-                      - export DOCKER_HOST="tcp://localhost:2375"
+                      - sleep 24h
                     - name: dind
                       image: docker:17-dind
                       command:
