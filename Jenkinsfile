@@ -10,7 +10,7 @@ pipeline {
                 spec:
                     containers:
                     - name: jnlp
-                        image: public.ecr.aws/y6q8o0k2/jenkins_dockercli
+                        image: jenkinsci/jnlp-slave
                         command:
                         - /bin/sh
                         - -c
