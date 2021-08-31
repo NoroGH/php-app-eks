@@ -27,8 +27,6 @@ pipeline {
                       - tail -f /dev/null
                       securityContext:
                         privileged: true 
-                    nodeSelector:
-                      app: node
             '''.stripIndent() 
         }
     }
