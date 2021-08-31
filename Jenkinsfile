@@ -16,6 +16,10 @@ pipeline {
                       - export DOCKER_HOST="tcp://localhost:2375"
                     - name: dind
                       image: docker:17-dind
+                      command:
+                      - sh 
+                      - -c
+                      - tail -f /dev/null
                       securityContext:
                         privileged: true 
             '''
