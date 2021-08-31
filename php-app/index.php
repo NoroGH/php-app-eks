@@ -1,5 +1,5 @@
 <?php
-$servername = "mysql_cont";
+$servername = "database-1.cxsd50hcgdst.us-east-1.rds.amazonaws.com";
 $username = "root";
 $password = "pass1234";
 $dbname = "phpdb";

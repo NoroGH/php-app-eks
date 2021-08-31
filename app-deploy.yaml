@@ -15,12 +15,19 @@ spec:
         app: app
     spec:
       containers:
-      - image: public.ecr.aws/y6q8o0k2/nginx_image:f153f075346402ba0ec248f572d96f6bf60fd313
+      - image: public.ecr.aws/y6q8o0k2/nginx_image:latest
         name: nginx
         ports:
         - containerPort: 80
-      - image: public.ecr.aws/y6q8o0k2/php_image:f153f075346402ba0ec248f572d96f6bf60fd313
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+      - image: public.ecr.aws/y6q8o0k2/php_image:latest
         name: php
         ports:
         - containerPort: 9000
-      
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1Gi"
