@@ -17,14 +17,7 @@ RUN apt-get update; \
 		libssl-dev \
 		libxml2-dev \
 		zlib1g-dev \
-        libpng-dev \
-		sudo
-
-RUN adduser --disabled-password --gecos '' docker
-RUN adduser docker sudo
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-
-USER docker
+        libpng-dev 
 
 RUN sudo docker-php-ext-install \
     curl \
@@ -39,7 +32,6 @@ RUN mkdir -p /var/www/${SITENAME}
 COPY /php-app/index.php /var/www/${SITENAME}
 
 EXPOSE 9000
-WORKDIR /var/www
 
 
 FROM nginx:latest AS stage-nginx
