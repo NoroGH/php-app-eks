@@ -80,7 +80,7 @@ pipeline {
 
         stage('ECR Login nginx') {
             steps {
-                sh """aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y6q8o0k2/nginx_image"""
+                sh """aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y6q8o0k2"""
             } 
         } 
         stage("Push nginx image") {
