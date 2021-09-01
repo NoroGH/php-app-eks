@@ -28,7 +28,7 @@ pipeline {
                             command: 
                             - /bin/sh
                             - -c
-                            - sleep "10" && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip -d ~/ && bash ~/aws/install
+                            - sleep "10" && wget "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -O "awscliv2.zip" && unzip awscliv2.zip -d ~/ && sh ~/aws/install
                       securityContext:
                         privileged: true 
                         runAsUser: 0 
