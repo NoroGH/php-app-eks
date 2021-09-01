@@ -43,7 +43,7 @@ pipeline {
             }
         } 
 
-        stage("Build nginx image") {
+        stage("Build nginx and php images") {
             when {
                 expression {
                     return env.GIT_BRANCH == "origin/master"
@@ -51,20 +51,8 @@ pipeline {
             }
             steps {
                 script {
-                    nginx = docker.build("NoroGH/php-app-eks:${env.GIT_COMMIT}", "--target stage-nginx -f ./Dockerfile .")
-                }
-            }
-        }
-
-        stage("Build php image") {
-            when {
-                expression {
-                    return env.GIT_BRANCH == "origin/master"
-                }
-            }
-            steps {
-                script {
-                    php = docker.build("NoroGH/php-app-eks:${env.GIT_COMMIT}", "--target stage-php -f ./Dockerfile .")
+                    nginx = docker.build("NoroGH/php-app-eks:${env.GIT_COMMIT}", "--target stage-nginx .")
+                    php = docker.build("NoroGH/php-app-eks:${env.GIT_COMMIT}", "--target stage-php .")
                 }
             }
         }
