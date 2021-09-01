@@ -18,7 +18,7 @@ RUN apt-get update; \
 		libxml2-dev \
 		zlib1g-dev \
         libpng-dev
-RUN sudo -i
+USER root 
 RUN docker-php-ext-install \
     curl \
     mysqli \
