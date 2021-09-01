@@ -15,10 +15,11 @@ pipeline {
                     - name: jnlp
                       image: jenkinsci/jnlp-slave
                       imagePullPolicy: Always
-                      command:
-                      - /bin/sh
-                      - -c
-                      - sleep 24h
+                      env:
+                      - name: POD_IP
+                        valueFrom:
+                            fieldRef:
+                                fieldPath: status.podIP
                     - name: dind
                       image: docker:17-dind
                       command:
