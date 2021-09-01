@@ -15,13 +15,6 @@ pipeline {
                     - name: jnlp
                       image: jenkinsci/jnlp-slave
                       imagePullPolicy: Always
-                      lifecycle:
-                        postStart:
-                          exec:
-                            command: 
-                            - /bin/sh
-                            - -c
-                            - sleep "10" && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip -d ~/ && bash ~/aws/install
                       env:
                       - name: POD_IP
                         valueFrom:
@@ -29,6 +22,13 @@ pipeline {
                                 fieldPath: status.podIP
                     - name: dind
                       image: docker:20.10.8-dind
+                      lifecycle:
+                        postStart:
+                          exec:
+                            command: 
+                            - /bin/sh
+                            - -c
+                            - sleep "10" && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip -d ~/ && bash ~/aws/install
                       securityContext:
                         privileged: true 
                         runAsUser: 0 
@@ -66,7 +66,7 @@ pipeline {
 
         stage('ECR Login php') {
             steps {
-                container('jnlp') {
+                container('dind') {
                     sh """aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y6q8o0k2"""
                 }
             } 
@@ -91,7 +91,7 @@ pipeline {
 
         stage('ECR Login nginx') {
             steps {
-                container('jnlp') {
+                container('dind') {
                     sh """aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y6q8o0k2"""
                 }
             } 
