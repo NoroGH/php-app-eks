@@ -25,6 +25,7 @@ pipeline {
                       securityContext:
                         privileged: true 
                         runAsUser: 0 
+                        runAsGroup: 0
             '''.stripIndent() 
         }
     }
