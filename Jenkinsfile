@@ -57,6 +57,12 @@ pipeline {
             }
         }
 
+        stage('ECR Login') {
+            steps {
+                sh """aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y6q8o0k2/php_image"""
+            } 
+        } 
+
         stage("Push php image") {
             when {
                 expression {
@@ -72,6 +78,11 @@ pipeline {
             }
         }
 
+        stage('ECR Login') {
+            steps {
+                sh """aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y6q8o0k2/nginx_image"""
+            } 
+        } 
         stage("Push nginx image") {
             when {
                 expression {
