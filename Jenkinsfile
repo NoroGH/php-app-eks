@@ -63,7 +63,9 @@ pipeline {
 
         stage('ECR Login php') {
             steps {
-                sh """aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y6q8o0k2"""
+                container('jnlp') {
+                    sh """aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y6q8o0k2"""
+                }
             } 
         } 
 
@@ -73,8 +75,8 @@ pipeline {
                     return env.GIT_BRANCH == "origin/master"
                 }
             }       
-            container('dind') {
-                steps {
+            steps {
+                container('dind') {
                     script {
                         docker.withRegistry('public.ecr.aws/y6q8o0k2', 'php_image') {
                             php.push("${env.GIT_COMMIT}")
@@ -86,7 +88,9 @@ pipeline {
 
         stage('ECR Login nginx') {
             steps {
-                sh """aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y6q8o0k2"""
+                container('jnlp') {
+                    sh """aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y6q8o0k2"""
+                }
             } 
         } 
         stage("Push nginx image") {
@@ -95,8 +99,8 @@ pipeline {
                     return env.GIT_BRANCH == "origin/master"
                 }
             }      
-            container('dind') { 
-                steps {
+            steps {
+                container('dind') {
                     script {
                         docker.withRegistry('public.ecr.aws/y6q8o0k2', 'nginx_image') {
                             nginx.push("${env.GIT_COMMIT}")
