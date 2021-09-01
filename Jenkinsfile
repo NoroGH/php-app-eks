@@ -21,7 +21,7 @@ pipeline {
                             fieldRef:
                                 fieldPath: status.podIP
                     - name: dind
-                      image: docker:17-dind
+                      image: docker:20.10.8-dind
                       securityContext:
                         privileged: true 
                         runAsUser: 0 
