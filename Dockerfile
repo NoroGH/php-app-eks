@@ -26,7 +26,7 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 USER docker
 
-RUN docker-php-ext-install \
+RUN sudo docker-php-ext-install \
     curl \
     mysqli \
     json \
