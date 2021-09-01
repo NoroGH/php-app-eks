@@ -19,7 +19,7 @@ RUN apt-get update; \
 		zlib1g-dev \
         libpng-dev 
 
-RUN sudo docker-php-ext-install \
+RUN docker-php-ext-install \
     curl \
     mysqli \
     json \
