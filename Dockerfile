@@ -17,8 +17,10 @@ RUN apt-get update; \
 		libssl-dev \
 		libxml2-dev \
 		zlib1g-dev \
-        libpng-dev
-USER root 
+        libpng-dev \
+		sudo
+RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
+USER docker
 RUN docker-php-ext-install \
     curl \
     mysqli \
