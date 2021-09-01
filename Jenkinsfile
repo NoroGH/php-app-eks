@@ -22,10 +22,6 @@ pipeline {
                                 fieldPath: status.podIP
                     - name: dind
                       image: docker:17-dind
-                      command:
-                      - sh 
-                      - -c
-                      - tail -f /dev/null
                       securityContext:
                         privileged: true 
             '''.stripIndent() 
