@@ -21,7 +21,7 @@ pipeline {
                             command: 
                             - /bin/sh
                             - -c
-                            - sleep "10" && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && sh /aws/install
+                            - sleep "10" && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && bash /aws/install
                       env:
                       - name: POD_IP
                         valueFrom:
