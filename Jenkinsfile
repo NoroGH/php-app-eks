@@ -48,8 +48,8 @@ pipeline {
             steps {
                 container('dind') {
                     script {
-                        nginx = docker.build("norogh/php-app-eks:${env.GIT_COMMIT}", "--target", "stage-nginx", ".")
-                        php = docker.build("norogh/php-app-eks:${env.GIT_COMMIT}", "--target", "stage-php", "." )
+                        nginx = docker.build("norogh/php-app-eks:${env.GIT_COMMIT}", "--target stage-nginx", ".")
+                        php = docker.build("norogh/php-app-eks:${env.GIT_COMMIT}", "--target stage-php", "." )
                     }
                 }
             }
