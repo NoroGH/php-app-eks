@@ -15,12 +15,13 @@ pipeline {
                     - name: jnlp
                       image: jenkinsci/jnlp-slave
                       imagePullPolicy: Always
-                      command:
-                      - /bin/sh
-                      - -c 
-                      - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" 
-                      - unzip awscliv2.zip 
-                      - sh /aws/install
+                      lifecycle:
+                        postStart:
+                          exec:
+                            command: 
+                            - /bin/sh
+                            - -c
+                            - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && sh /aws/install
                       env:
                       - name: POD_IP
                         valueFrom:
