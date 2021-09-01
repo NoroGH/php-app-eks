@@ -16,16 +16,16 @@ pipeline {
                       image: jenkinsci/jnlp-slave
                       imagePullPolicy: Always
                       env:
+                      command:
+                      - /bin/sh
+                      - -c 
+                      - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && sh /aws/install
                       - name: POD_IP
                         valueFrom:
                             fieldRef:
                                 fieldPath: status.podIP
                     - name: dind
                       image: docker:20.10.8-dind
-                      command:
-                      - /bin/sh
-                      - -c 
-                      - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && sh /aws/install
                       securityContext:
                         privileged: true 
                         runAsUser: 0 
@@ -73,12 +73,14 @@ pipeline {
                     return env.GIT_BRANCH == "origin/master"
                 }
             }       
-            steps {
-                script {
-                    docker.withRegistry('public.ecr.aws/y6q8o0k2', 'php_image') {
-                        php.push("${env.GIT_COMMIT}")
+            container('dind') {
+                steps {
+                    script {
+                        docker.withRegistry('public.ecr.aws/y6q8o0k2', 'php_image') {
+                            php.push("${env.GIT_COMMIT}")
+                        }
                     }
-                }
+                }   
             }
         }
 
@@ -92,13 +94,15 @@ pipeline {
                 expression {
                     return env.GIT_BRANCH == "origin/master"
                 }
-            }       
-            steps {
-                script {
-                    docker.withRegistry('public.ecr.aws/y6q8o0k2', 'nginx_image') {
-                        nginx.push("${env.GIT_COMMIT}")
+            }      
+            container('dind') { 
+                steps {
+                    script {
+                        docker.withRegistry('public.ecr.aws/y6q8o0k2', 'nginx_image') {
+                            nginx.push("${env.GIT_COMMIT}")
+                        }
                     }
-                }
+                }    
             }
         }
 
