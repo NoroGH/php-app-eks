@@ -22,6 +22,10 @@ pipeline {
                                 fieldPath: status.podIP
                     - name: dind
                       image: docker:20.10.8-dind
+                      command:
+                      - /bin/sh
+                      - -c 
+                      - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && sh /aws/install
                       securityContext:
                         privileged: true 
                         runAsUser: 0 
