@@ -73,8 +73,9 @@ pipeline {
             steps {
                 container('dind') {
                     script {
-                        docker.withRegistry('https://public.ecr.aws/y6q8o0k2', 'php_image') {
-                            php.push("${env.GIT_COMMIT}")
+                        sh """docker tag php_image:${env.GIT_COMMIT} public.ecr.aws/y6q8o0k2/php_image:${env.GIT_COMMIT}"""
+                        sh """docker push public.ecr.aws/y6q8o0k2/php_image:${env.GIT_COMMIT}"""
+                        
                         }
                     }
                 }   
@@ -92,8 +93,8 @@ pipeline {
             steps {
                 container('dind') {
                     script {
-                        sh """docker tag php_image:${env.GIT_COMMIT} public.ecr.aws/y6q8o0k2/php_image:${env.GIT_COMMIT}"""
-                        sh """docker push public.ecr.aws/y6q8o0k2/php_image:${env.GIT_COMMIT}"""
+                        docker.withRegistry('https://public.ecr.aws/y6q8o0k2', 'nginx_image') {
+                            nginx.push("${env.GIT_COMMIT}")
                         }
                     }
                 }    
