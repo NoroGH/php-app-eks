@@ -30,13 +30,13 @@ pipeline {
                       lifecycle:
                         postStart:
                           exec:
-                          command: 
-                          - "sh" 
-                          - "-c" 
-                          - |
-                            apk add --no-cache python3 py3-pip
-                            pip3 install --upgrade pip
-                            pip3 install awscli
+                            command: 
+                            - "sh" 
+                            - "-c" 
+                            - |
+                              apk add --no-cache python3 py3-pip
+                              pip3 install --upgrade pip
+                              pip3 install awscli
                       securityContext:
                         privileged: true 
             '''.stripIndent() 
