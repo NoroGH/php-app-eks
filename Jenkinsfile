@@ -64,7 +64,7 @@ pipeline {
         stage('ECR Login php') {
             steps {
                 container('dind') {
-                    sh """aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y6q8o0k2"""
+                    sh """aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y6q8o0k2"""
                 }
             } 
         } 
@@ -89,7 +89,7 @@ pipeline {
         stage('ECR Login nginx') {
             steps {
                 container('dind') {
-                    sh """aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y6q8o0k2"""
+                    sh """aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y6q8o0k2"""
                 }
             } 
         } 
