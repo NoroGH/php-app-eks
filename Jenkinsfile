@@ -92,7 +92,7 @@ pipeline {
             steps {
                 container('dind') {
                     script {
-                        sh """docker tag php_image:${env.GIT_COMMIT} public.ecr.aws/y6q8o0k2/php_image:$(git rev-parse HEAD)"""
+                        sh """docker tag php_image:${env.GIT_COMMIT} public.ecr.aws/y6q8o0k2/php_image:${env.GIT_COMMIT}"""
                         sh """docker push public.ecr.aws/y6q8o0k2/php_image:${env.GIT_COMMIT}"""
                         }
                     }
