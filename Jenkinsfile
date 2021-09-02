@@ -51,7 +51,7 @@ pipeline {
                     script {
                         sh "aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y6q8o0k2"
                         docker.withRegistry('https://public.ecr.aws/y6q8o0k2') {
-                            nginx = docker.build("norogh/php-app-eks:${env.GIT_COMMIT}", "--target stage-nginx .", "-t public.ecr.aws/y6q8o0k2/nginx_image:${env.GIT_COMMIT}")
+                            nginx = docker.build("public.ecr.aws/y6q8o0k2/nginx_image:${env.GIT_COMMIT}", "--target stage-nginx .")
                                 nginx.push("${env.GIT_COMMIT}")
                         }
                     }
@@ -65,7 +65,7 @@ pipeline {
                     script {
                         sh "aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y6q8o0k2"
                         docker.withRegistry('https://public.ecr.aws/y6q8o0k2') {
-                            php = docker.build("norogh/php-app-eks:${env.GIT_COMMIT}", "--target stage-php .", "-t public.ecr.aws/y6q8o0k2/php_image:${env.GIT_COMMIT}" )
+                            php = docker.build("norogh/php-app-eks:${env.GIT_COMMIT}", "--target stage-php .")
                                 php.push("${env.GIT_COMMIT}")
                         }
                     }
