@@ -22,31 +22,28 @@ pipeline {
                                 fieldPath: status.podIP
                     - name: dind
                       image: docker:20.10.8-dind
+                      env:
+                      - name: AWS_ACCESS_KEY_ID
+                        value: AKIAT7LGXONOC3PQR62Q
+                      - name: AWS_SECRET_ACCESS_KEY
+                        value: 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
                       lifecycle:
                         postStart:
                           exec:
-                            command: 
-                            - /bin/sh
-                            - -c
-                            - sleep "10" && wget "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -O "awscliv2.zip" && unzip awscliv2.zip -d ~/ && sh ~/aws/install
+                          command: 
+                          - "sh" 
+                          - "-c" 
+                          - |
+                            apk add --no-cache python3 py3-pip
+                            pip3 install --upgrade pip
+                            pip3 install awscli
                       securityContext:
                         privileged: true 
-                        runAsUser: 0 
-                        runAsGroup: 0
             '''.stripIndent() 
         }
     }
 
     stages {
-        stage("Get commit msg") {
-            steps {
-                container('jnlp') {
-                    script {
-                        env.GIT_COMMIT_MSG = sh (script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true).trim()
-                    }  
-                }
-            }
-        } 
 
         stage("Build nginx and php images") {
             when {
