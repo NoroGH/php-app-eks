@@ -69,16 +69,11 @@ pipeline {
             } 
         } 
 
-        stage("Push php image") {
-            when {
-                expression {
-                    return env.GIT_BRANCH == "origin/master"
-                }
-            }       
+        stage("Push php image") {      
             steps {
                 container('dind') {
                     script {
-                        docker.withRegistry('public.ecr.aws/y6q8o0k2', 'php_image') {
+                        docker.withRegistry('https://public.ecr.aws/y6q8o0k2', 'php_image') {
                             php.push("${env.GIT_COMMIT}")
                         }
                     }
@@ -93,29 +88,19 @@ pipeline {
                 }
             } 
         } 
-        stage("Push nginx image") {
-            when {
-                expression {
-                    return env.GIT_BRANCH == "origin/master"
-                }
-            }      
+        stage("Push nginx image") {    
             steps {
                 container('dind') {
                     script {
-                        docker.withRegistry('public.ecr.aws/y6q8o0k2', 'nginx_image') {
-                            nginx.push("${env.GIT_COMMIT}")
+                        sh """docker tag php_image:$(git rev-parse HEAD) public.ecr.aws/y6q8o0k2/php_image:$(git rev-parse HEAD)"""
+                        sh """docker push public.ecr.aws/y6q8o0k2/php_image:$(git rev-parse HEAD)"""
                         }
                     }
                 }    
             }
         }
 
-        stage ('Starting CD') {
-            when {
-                expression {
-                    return env.GIT_BRANCH == "origin/master"
-                }
-            }        
+        stage ('Starting CD') {    
             steps {
                 build job: 'app cd', parameters: [[$class: 'StringParameterValue', name: 'dockertag', value: "${env.GIT_COMMIT}"]]
             }
